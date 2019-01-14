@@ -18,6 +18,8 @@
  * Change Log:
  *	1. Todd Wackford
  *	2014-10-03:	Added capability.button device picker and button.pushed event subscription. For Doorbell.
+ *  2. Jack Manuel
+ *  2019-01-13: Added second phone number to SMS and make the 2 phone numbers a required fields
  */
 definition(
 		name: "Notify Me When",
@@ -49,7 +51,8 @@ preferences {
 	}
 	section("Via a push notification and/or an SMS message"){
 		input("recipients", "contact", title: "Send notifications to") {
-			input "phone", "phone", title: "Enter a phone number to get SMS", required: false
+			input "phone", "phone", title: "Enter a phone number to get SMS", required: true
+            input "phone2", "phone2", title: "Enter a phone number to get SMS", required: true
 			paragraph "If outside the US please make sure to enter the proper country code"
 			input "pushAndPhone", "enum", title: "Notify me via Push Notification", required: false, options: ["Yes", "No"]
 		}
@@ -112,22 +115,13 @@ private sendMessage(evt) {
 	if (location.contactBookEnabled) {
 		sendNotificationToContacts(msg, recipients, options)
 	} else {
-		if (phone) {
-			options.phone = phone
-			if (pushAndPhone != 'No') {
-				log.debug 'Sending push and SMS'
-				options.method = 'both'
-			} else {
-				log.debug 'Sending SMS'
-				options.method = 'phone'
-			}
-		} else if (pushAndPhone != 'No') {
-			log.debug 'Sending push'
-			options.method = 'push'
-		} else {
-			log.debug 'Sending nothing'
-			options.method = 'none'
-		}
+        log.debug 'Sending push and SMS phone1'
+        options.method = 'both'
+        options.phone = phone
+		sendNotification(msg, options)
+        log.debug 'Sending SMS phone2'
+        options.method = 'phone'
+        options.phone = phone2
 		sendNotification(msg, options)
 	}
 	if (frequency) {
