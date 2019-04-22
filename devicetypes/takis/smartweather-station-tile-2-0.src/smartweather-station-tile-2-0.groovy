@@ -480,7 +480,8 @@ private pad(String s, size = 25) {
 
 
 private get(feature) {
-    getWeatherFeature(feature, zipCode)
+    //getWeatherFeature(feature, zipCode)
+    getTwcConditions(feature, zipCode)
 }
 
 private localDate(timeZone) {
