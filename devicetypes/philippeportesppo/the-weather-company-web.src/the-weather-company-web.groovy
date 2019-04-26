@@ -24,8 +24,27 @@ metadata {
 
 	tiles(scale: 2) {
 
+    multiAttributeTile(name:"temperature", type:"generic", width:6, height:4, canChangeIcon: false) {
+    tileAttribute("device.temperature", key: "PRIMARY_CONTROL") {
+        attributeState("temperature",label:'${currentValue}°',
+			backgroundColors:[
+			[value: 32, color: "#153591"],
+			[value: 44, color: "#1e9cbb"],
+			[value: 59, color: "#90d2a7"],
+			[value: 74, color: "#44b621"],
+			[value: 84, color: "#f1d801"],
+			[value: 92, color: "#d04e00"],
+			[value: 98, color: "#bc2323"]
+            ]) }
+
+    tileAttribute("device.TWCFeelsLikelevel", key: "SECONDARY_CONTROL") {
+        attributeState("TWCFeelsLikelevel", label:'Feels Like ${currentValue}°')
+    }
+    }
+/*
 	standardTile("TWC_web", "device.TWC_web",  width: 6, height: 3,  canChangeIcon: false ) {
             state "default", icon: "https://business.weather.com/img/the-weather-company-logo.png", backgroundColor: "#999999"      }   
+*/            
              
     standardTile("temperature", "device.temperature", width: 2, height: 2, canChangeIcon: false) {
             state "default", label: '${currentValue}º',unit:'${currentValue}', icon: "st.Weather.weather2", backgroundColor:"#999999"}  
@@ -100,7 +119,7 @@ metadata {
     standardTile("weather", "device.weather", width: 6, height: 2) {
  		state "default", label:'${currentValue}'
  		} 
-
+/*
     standardTile("TWC_main", "device.TWC_main", decoration: "flat", width: 6, height: 4) 
     	{
                state "na",icon:"https://raw.githubusercontent.com/philippeportesppo/TheWeatherCompany_SmartThings/master/icons/na.png"
@@ -152,8 +171,11 @@ metadata {
                 state "45",icon:"https://raw.githubusercontent.com/philippeportesppo/TheWeatherCompany_SmartThings/master/icons/45.png"
                 state "46",icon:"https://raw.githubusercontent.com/philippeportesppo/TheWeatherCompany_SmartThings/master/icons/46.png"
                 state "47",icon:"https://raw.githubusercontent.com/philippeportesppo/TheWeatherCompany_SmartThings/master/icons/47.png"  		}
-	main("TWC_main")
+	main("TWC_main") 
 	details(["TWC_web","temperature","humidity","TWCFeelsLikelevel","TWCdewpointlevel","TWC_Icon_UrlIcon","weather","refresh" ])
+*/    
+	main("temperature") 
+	details(["temperature","humidity","TWCFeelsLikelevel","TWCdewpointlevel","TWC_Icon_UrlIcon","weather","refresh" ])
  	}
 }
 
